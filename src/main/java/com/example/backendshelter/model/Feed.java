@@ -13,8 +13,9 @@ import java.time.LocalDateTime;
 @Getter
 public class Feed {
 
-    @EmbeddedId
-    private PetFeedId compositeId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private LocalDateTime feedTime;
 

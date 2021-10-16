@@ -40,6 +40,7 @@ public class PetService {
     }
 
     public Pet findById(Long id) {
+
         return petRepository.findById(id).orElseThrow(() -> new PetNotFound("Pet doesn't exists."));
     }
     public Pet addNewPetFeed(CreatePetFeedRQ createPetFeedRQ) {
