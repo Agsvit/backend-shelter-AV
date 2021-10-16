@@ -1,8 +1,7 @@
 package com.example.backendshelter.controller;
 
 
-import com.example.backendshelter.controller.request.CreateFoodRequest;
-import com.example.backendshelter.model.Food;
+import com.example.backendshelter.controller.request.Create.FoodCreateRequest;
 import com.example.backendshelter.service.FoodService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +20,7 @@ public class FoodController {
     }
 
     @PostMapping("/food")
-    public void createFood(@RequestBody @Valid CreateFoodRequest request) {
+    public void createFood(@RequestBody @Valid FoodCreateRequest request) {
         //foodService.create(request.getBrand(), request.getDescription());
     }
 }

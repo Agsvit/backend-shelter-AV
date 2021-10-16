@@ -1,8 +1,8 @@
 package com.example.backendshelter.controller;
 
 import com.example.backendshelter.model.Pet;
-import com.example.backendshelter.controller.request.CreatePetFeedRQ;
-import com.example.backendshelter.controller.request.CreatePetRQ;
+import com.example.backendshelter.controller.request.Create.PetFeedCreateRequest;
+import com.example.backendshelter.controller.request.Create.PetCreateRequest;
 import com.example.backendshelter.service.PetService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +31,12 @@ public class AdoptionController {
     }
 
     @PostMapping(value = "/pets", consumes = "application/json")
-    public List<Pet> addPet(@RequestBody @Valid List<CreatePetRQ> createPetRQ) {
-        return petService.save(createPetRQ);
+    public List<Pet> addPet(@RequestBody @Valid List<PetCreateRequest> petCreateRequest) {
+        return petService.save(petCreateRequest);
     }
 
     @PostMapping(value = "/pets/feed", consumes = "application/json")
-    public Pet addPetFeed(@RequestBody @Valid CreatePetFeedRQ petFeedRQS) {
+    public Pet addPetFeed(@RequestBody @Valid PetFeedCreateRequest petFeedRQS) {
         return petService.addNewPetFeed(petFeedRQS);
     }
 

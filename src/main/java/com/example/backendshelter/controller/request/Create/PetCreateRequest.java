@@ -1,4 +1,4 @@
-package com.example.backendshelter.controller.request;
+package com.example.backendshelter.controller.request.Create;
 
 import com.example.backendshelter.model.PetType;
 import lombok.*;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreatePetRQ {
+public class PetCreateRequest {
     private PetType petType;
     @NotBlank(message = "Name is a mandatory field.")
     private String name;

@@ -1,4 +1,4 @@
-package com.example.backendshelter.controller.request;
+package com.example.backendshelter.controller.request.Create;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreatePetFeedRQ {
+public class PetFeedCreateRequest {
     private long petId;
     private long feedId;
 }
