@@ -3,6 +3,7 @@ package com.example.backendshelter.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,4 +22,7 @@ public class Shelter {
     private int capacity;
     @Enumerated
     private ShelterLocation shelterLocation;
+
+    @OneToMany(mappedBy = "shelter")
+    private List<Pet> pets;
 }

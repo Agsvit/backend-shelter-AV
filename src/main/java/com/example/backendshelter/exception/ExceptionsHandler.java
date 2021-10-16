@@ -19,4 +19,13 @@ public class ExceptionsHandler {
                 LocalDateTime.now()
         );
     }
+    @ExceptionHandler({ShelterNotFound.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public HttpErrorResponse handleGenericException(ShelterNotFound exception) {
+        return new HttpErrorResponse(
+                404,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+    }
 }

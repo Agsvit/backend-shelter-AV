@@ -1,20 +1,30 @@
 package com.example.backendshelter.controller;
 
+import com.example.backendshelter.controller.request.Create.PetCreateRequest;
 import com.example.backendshelter.controller.request.Create.ShelterCreateRequest;
+import com.example.backendshelter.controller.request.Response.PetResponseReturn;
+import com.example.backendshelter.controller.request.Response.ShelterPetResponseReturn;
 import com.example.backendshelter.controller.request.Response.ShelterResponseReturn;
+import com.example.backendshelter.model.Pet;
 import com.example.backendshelter.model.Shelter;
+import com.example.backendshelter.service.PetService;
 import com.example.backendshelter.service.ShelterService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 public class ShelterController {
 
     private final ShelterService shelterService;
+    private final PetService petService;
 
-    public ShelterController(ShelterService shelterService) {
+    public ShelterController(ShelterService shelterService, PetService petService) {
         this.shelterService = shelterService;
+        this.petService = petService;
     }
 
     @PostMapping(value = "/shelter", consumes = "application/json")
@@ -34,4 +44,29 @@ public class ShelterController {
         return shelterResp;
     }
 
+    @PostMapping(value = "/shelter/{id}/pets")
+    public ShelterPetResponseReturn createPetOnShelter(@RequestBody List<PetCreateRequest> petList, Long id) {
+        List<Pet> pets = new ArrayList<>();
+        for (PetCreateRequest petReq : petList) {
+            pets.add(Pet
+                    .builder()
+                    .petType(petReq.getPetType())
+                    .name(petReq.getName())
+                    .build());
+        }
+        Shelter shelter = petService.saveinshelter(pets, id);
+        List<PetResponseReturn> petResps = new ArrayList<>();
+        ShelterPetResponseReturn shelterPetResponseReturn =
+                new ShelterPetResponseReturn(shelter.getId(), shelter.getName()
+                        , shelter.getCapacity(), shelter.getShelterLocation(), petResps);
+        for (Pet pet : shelter.getPets()) {
+            PetResponseReturn petResponseReturn = new PetResponseReturn(
+                    pet.getId(),
+                    pet.getPetType(),
+                    pet.getName());
+            shelterPetResponseReturn.getPetResponseReturnList().add(petResponseReturn);
+        }
+        return shelterPetResponseReturn;
+
+    }
 }

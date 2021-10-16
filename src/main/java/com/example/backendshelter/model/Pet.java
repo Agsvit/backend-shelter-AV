@@ -27,4 +27,8 @@ public class Pet {
 
     @OneToMany(mappedBy = "pet")
     private List<Feed> feedList;
+
+    @ManyToOne
+    @JoinColumn(name = "id_shelter")
+    private Shelter shelter;
 }
