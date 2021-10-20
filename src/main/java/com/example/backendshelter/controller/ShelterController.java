@@ -9,9 +9,7 @@ import com.example.backendshelter.model.Pet;
 import com.example.backendshelter.model.Shelter;
 import com.example.backendshelter.service.PetService;
 import com.example.backendshelter.service.ShelterService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +23,28 @@ public class ShelterController {
     public ShelterController(ShelterService shelterService, PetService petService) {
         this.shelterService = shelterService;
         this.petService = petService;
+    }
+
+    @GetMapping("/shelter/{name}")
+    public ShelterResponseReturn getShelterByName(String name) {
+        Shelter shelter = shelterService.findByNameContaining(name);
+        ShelterResponseReturn shelterResponse = new ShelterResponseReturn(
+                shelter.getId(),
+                shelter.getName(),
+                shelter.getCapacity(),
+                shelter.getShelterLocation());
+        return shelterResponse;
+    }
+
+    @GetMapping("/shelter/{id}")
+    public ShelterResponseReturn existsById(Long id) {
+        Shelter shelter = shelterService.findById(id);
+        ShelterResponseReturn shelterResponse = new ShelterResponseReturn(
+                shelter.getId(),
+                shelter.getName(),
+                shelter.getCapacity(),
+                shelter.getShelterLocation());
+        return shelterResponse;
     }
 
     @PostMapping(value = "/shelter", consumes = "application/json")
@@ -67,6 +87,9 @@ public class ShelterController {
             shelterPetResponseReturn.getPetResponseReturnList().add(petResponseReturn);
         }
         return shelterPetResponseReturn;
-
     }
+
+    @DeleteMapping(value = "/shelter/{id}")
+    public void deleteDriver(Long id) {shelterService.deleteById(id);}
+
 }

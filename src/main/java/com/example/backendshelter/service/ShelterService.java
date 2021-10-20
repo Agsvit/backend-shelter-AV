@@ -1,8 +1,11 @@
 package com.example.backendshelter.service;
 
+import com.example.backendshelter.exception.ShelterNotFound;
 import com.example.backendshelter.model.Shelter;
 import com.example.backendshelter.repository.ShelterRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ShelterService {
@@ -16,5 +19,17 @@ public class ShelterService {
 
     public Shelter save(Shelter shelter) {
         return shelterRepository.save(shelter);
+    }
+
+    public Shelter findByNameContaining(String name) {
+        return shelterRepository.findByNameContaining(name).orElseThrow(ShelterNotFound::new);
+    }
+
+    public Shelter findById(Long id) {
+        return shelterRepository.findById(id).orElseThrow(ShelterNotFound::new);
+    }
+
+    public void deleteById(Long id) {
+        shelterRepository.deleteById(id);
     }
 }
